@@ -1,0 +1,19 @@
+.duration-container {
+  position: absolute;
+  top: 50%;
+  transform: translate(0, -50%);
+  right: 4rem;
+  padding: 1rem;
+  border-radius: 50%;
+  width: 4rem;
+  height: 4rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-weight: bold;
+}
+.add-new-interview {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}

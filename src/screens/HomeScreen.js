@@ -18,8 +18,7 @@ export default function HomeScreen() {
           <KeyboardDatePicker
             margin='normal'
             id='date-picker-dialog'
-            label='Date picker dialog'
-            format='MM/dd/yyyy'
+            format='dd/MM/yyyy'
             value={date}
             onChange={setDate}
             KeyboardButtonProps={{
@@ -28,8 +27,7 @@ export default function HomeScreen() {
           />
         </MuiPickersUtilsProvider>
       </div>
-      <div className='flex-1 bg-gray-400'>
-        <p>Timeline</p>
+      <div className='flex-1 bg-gray-300'>
         <MeetingsList />
       </div>
     </div>

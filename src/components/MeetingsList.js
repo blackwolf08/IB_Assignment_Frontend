@@ -1,29 +1,89 @@
 import React, { useState } from 'react';
+import { Card, CardContent, Button, Modal } from '@material-ui/core';
+import { Add } from '@material-ui/icons';
+import { makeStyles } from '@material-ui/core/styles';
+import { CreateInterviewStepper } from './CreateInterviewStepper';
+
+const useStyles = makeStyles({
+  root: {
+    minWidth: 275,
+    marginBottom: 10,
+  },
+  content: {
+    position: 'relative',
+  },
+  button: {
+    flex: 1,
+    paddingTop: '2rem',
+    paddingBottom: '2rem',
+  },
+  modal: {
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+});
 
 export default function MeetingsList() {
+  const classes = useStyles();
   const [state, setState] = useState([
     {
       id: 787878,
-      interviewer: 'ss@djdj.com',
-      interviewee: 'ss@djdj.com',
+      interviewer: 'chandu@gmail.com',
+      interviewee: 'batri@gmail.com',
       startTime: Date.now().toLocaleString(),
       duration: '30',
     },
     {
       id: 787877,
-      interviewer: 'ss@djdj.com',
-      interviewee: 'ss@djdj.com',
+      interviewer: 'areen@gmail.com',
+      interviewee: 'dhama@gmail.com',
       startTime: Date.now().toLocaleString(),
       duration: '30',
     },
   ]);
+  const [isAddNewInterviewModalOpen, setIsAddNewInterviewModalOpen] = useState(
+    false
+  );
+
+  const handleModalClose = () => {
+    setIsAddNewInterviewModalOpen(false);
+  };
   return (
-    <div className='bg-gray-100'>
-      {state.map(({ id, duration, interviewee, interviewer, startTime }) => (
-        <div key={id}>
-          <p>{interviewee}</p>
-        </div>
-      ))}
-    </div>
+    <>
+      <Modal
+        className={classes.modal}
+        open={isAddNewInterviewModalOpen}
+        onClose={handleModalClose}
+      >
+        <CreateInterviewStepper />
+      </Modal>
+      <div className='bg-gray-300 p-4'>
+        <h1 className='font-bold text-center mb-4'>
+          Interviews Scheduled for Today
+        </h1>
+        <Card className={classes.root}>
+          <div className='add-new-interview'>
+            <Button
+              onClick={() => setIsAddNewInterviewModalOpen(true)}
+              className={classes.button}
+            >
+              <Add />
+            </Button>
+          </div>
+        </Card>
+        {state.map(({ id, duration, interviewee, interviewer, startTime }) => (
+          <Card className={classes.root} key={id}>
+            <CardContent className={classes.content}>
+              <div className='flex flex-col content-around'>
+                <h6 className='mb-4'>{`Interviewer ${interviewer}`}</h6>
+                <h6>{`Interviewee ${interviewee}`}</h6>
+              </div>
+              <div className='duration-container bg-gray-200'>{duration}</div>
+            </CardContent>
+          </Card>
+        ))}
+      </div>
+    </>
   );
 }
