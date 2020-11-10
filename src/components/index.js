@@ -1,3 +1,4 @@
 import { Header } from './Header';
+import MeetingsList from './MeetingsList';
 
-export { Header };
+export { Header, MeetingsList };
