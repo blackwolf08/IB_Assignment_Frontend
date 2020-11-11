@@ -1,8 +1,15 @@
-import React, { useState } from 'react';
-import { Card, CardContent, Button, Modal } from '@material-ui/core';
+import React, { useEffect, useState } from 'react';
+import {
+  Card,
+  CardContent,
+  Button,
+  Modal,
+  CircularProgress,
+} from '@material-ui/core';
 import { Add } from '@material-ui/icons';
 import { makeStyles } from '@material-ui/core/styles';
 import { CreateInterviewStepper } from './CreateInterviewStepper';
+import { useAppContext } from '../contexts/AppContext';
 
 const useStyles = makeStyles({
   root: {
@@ -26,22 +33,12 @@ const useStyles = makeStyles({
 
 export default function MeetingsList() {
   const classes = useStyles();
-  const [state, setState] = useState([
-    {
-      id: 787878,
-      interviewer: 'chandu@gmail.com',
-      interviewee: 'batri@gmail.com',
-      startTime: Date.now().toLocaleString(),
-      duration: '30',
-    },
-    {
-      id: 787877,
-      interviewer: 'areen@gmail.com',
-      interviewee: 'dhama@gmail.com',
-      startTime: Date.now().toLocaleString(),
-      duration: '30',
-    },
-  ]);
+  let { interviewList, loading, fetchInterviews } = useAppContext();
+
+  useEffect(() => {
+    fetchInterviews();
+  }, []);
+
   const [isAddNewInterviewModalOpen, setIsAddNewInterviewModalOpen] = useState(
     false
   );
@@ -56,7 +53,9 @@ export default function MeetingsList() {
         open={isAddNewInterviewModalOpen}
         onClose={handleModalClose}
       >
-        <CreateInterviewStepper />
+        <span>
+          <CreateInterviewStepper />
+        </span>
       </Modal>
       <div className='bg-gray-300 p-4'>
         <h1 className='font-bold text-center mb-4'>
@@ -72,17 +71,24 @@ export default function MeetingsList() {
             </Button>
           </div>
         </Card>
-        {state.map(({ id, duration, interviewee, interviewer, startTime }) => (
-          <Card className={classes.root} key={id}>
-            <CardContent className={classes.content}>
-              <div className='flex flex-col content-around'>
-                <h6 className='mb-4'>{`Interviewer ${interviewer}`}</h6>
-                <h6>{`Interviewee ${interviewee}`}</h6>
-              </div>
-              <div className='duration-container bg-gray-200'>{duration}</div>
-            </CardContent>
-          </Card>
-        ))}
+        {loading && (
+          <div className='text-center'>
+            <CircularProgress />
+          </div>
+        )}
+        {interviewList?.map(
+          ({ id, duration, interviewee, interviewer, star_time }) => (
+            <Card className={classes.root} key={id}>
+              <CardContent className={classes.content}>
+                <div className='flex flex-col content-around'>
+                  <h6 className='mb-4'>{`Interviewer ${interviewer}`}</h6>
+                  <h6>{`Interviewee ${interviewee}`}</h6>
+                </div>
+                <div className='duration-container bg-gray-200'>{duration}</div>
+              </CardContent>
+            </Card>
+          )
+        )}
       </div>
     </>
   );

@@ -21,9 +21,7 @@ export default function HomeScreen() {
             format='dd/MM/yyyy'
             value={date}
             onChange={setDate}
-            KeyboardButtonProps={{
-              'aria-label': 'change date',
-            }}
+            disablePast
           />
         </MuiPickersUtilsProvider>
       </div>

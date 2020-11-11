@@ -11,6 +11,8 @@ import {
   MuiPickersUtilsProvider,
   KeyboardTimePicker,
 } from '@material-ui/pickers';
+import moment from 'moment';
+import { useAppContext } from '../contexts/AppContext';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -33,13 +35,12 @@ const getSteps = () => {
 
 export function CreateInterviewStepper() {
   const classes = useStyles();
+  const { date } = useAppContext();
   const [activeStep, setActiveStep] = useState(0);
   const [duration, setDuration] = useState('');
   const [error, setError] = useState(false);
   const steps = getSteps();
-  const [selectedDate, setSelectedDate] = React.useState(
-    new Date('2014-08-18T21:11:54')
-  );
+  const [selectedDate, setSelectedDate] = useState(date);
 
   const handleDurationChange = (duration) => {
     let re = /^\d+$/g;
@@ -61,9 +62,6 @@ export function CreateInterviewStepper() {
               id='time-picker'
               value={selectedDate}
               onChange={setSelectedDate}
-              KeyboardButtonProps={{
-                'aria-label': 'change time',
-              }}
             />
           </div>
         );
@@ -93,6 +91,8 @@ export function CreateInterviewStepper() {
   const handleBack = () => {
     setActiveStep((prevActiveStep) => prevActiveStep - 1);
   };
+
+  console.log(selectedDate);
 
   return (
     <div className={classes.root}>
