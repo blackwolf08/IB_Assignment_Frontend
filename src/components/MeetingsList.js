@@ -6,9 +6,10 @@ import {
   Modal,
   CircularProgress,
 } from '@material-ui/core';
-import { Add, Delete } from '@material-ui/icons';
+import { Add, Delete, Edit } from '@material-ui/icons';
 import { makeStyles } from '@material-ui/core/styles';
 import { CreateInterviewStepper } from './CreateInterviewStepper';
+import ModifyInterviewModal from './ModifyInterviewModal';
 import { useAppContext } from '../contexts/AppContext';
 import axios from 'axios';
 import { BASE_URI, ROUTES } from '../utils';
@@ -44,9 +45,20 @@ export default function MeetingsList() {
   const [isAddNewInterviewModalOpen, setIsAddNewInterviewModalOpen] = useState(
     false
   );
+  const [isModifyModalOpen, setIsModifyModalOpen] = useState(false);
+  const [modalData, setModalData] = useState({
+    id: 1,
+    duration: '30',
+    interviewee: 'sunnydhama@gmail.com',
+    interviewer: 'siddharth@gmail.com',
+    start_time: new Date(),
+  });
 
   const handleModalClose = () => {
     setIsAddNewInterviewModalOpen(false);
+  };
+  const handleModifyModalClose = () => {
+    setIsModifyModalOpen(false);
   };
 
   const deleteInterview = async (id) => {
@@ -71,6 +83,16 @@ export default function MeetingsList() {
           />
         </span>
       </Modal>
+      <Modal
+        className={classes.modal}
+        open={isModifyModalOpen}
+        onClose={handleModifyModalClose}
+      >
+        <ModifyInterviewModal
+          setIsModifyModalOpen={setIsModifyModalOpen}
+          data={modalData}
+        />
+      </Modal>
       <div className='bg-gray-300 p-4'>
         <h1 className='font-bold text-center mb-4'>
           Interviews Scheduled for Today
@@ -91,23 +113,46 @@ export default function MeetingsList() {
           </div>
         )}
         {interviewList?.map(
-          ({ id, duration, interviewee, interviewer, star_time }) => (
-            <Card className={classes.root} key={id}>
-              <CardContent className={classes.content}>
-                <div className='flex flex-col content-around'>
-                  <h6 className='mb-4'>{`Interviewer ${interviewer}`}</h6>
-                  <h6>{`Interviewee ${interviewee}`}</h6>
-                </div>
-                <div className='duration-container bg-gray-200'>{duration}</div>
-                <button
-                  onClick={() => deleteInterview(id)}
-                  className='delete-container bg-red-200'
-                >
-                  <Delete />
-                </button>
-              </CardContent>
-            </Card>
-          )
+          ({ id, duration, interviewee, interviewer, start_time }) => {
+            let _date = new Date(parseInt(start_time))
+              .toString()
+              .split('GMT')[0];
+            return (
+              <Card className={classes.root} key={id}>
+                <CardContent className={classes.content}>
+                  <div className='flex flex-col content-around'>
+                    <h6 className='font-bold'>{`Interviewer ${interviewer}`}</h6>
+                    <h6 className='font-bold'>{`Interviewee ${interviewee}`}</h6>
+                    <h6 className='font-bold'>{`${_date}`}</h6>
+                  </div>
+                  <div className='duration-container bg-gray-200'>
+                    {duration}
+                  </div>
+                  <button
+                    onClick={() => deleteInterview(id)}
+                    className='delete-container bg-red-200'
+                  >
+                    <Delete />
+                  </button>
+                  <button
+                    onClick={() => {
+                      setIsModifyModalOpen(true);
+                      setModalData({
+                        id,
+                        duration,
+                        interviewee,
+                        interviewer,
+                        start_time,
+                      });
+                    }}
+                    className='edit-container bg-blue-200'
+                  >
+                    <Edit />
+                  </button>
+                </CardContent>
+              </Card>
+            );
+          }
         )}
       </div>
     </>

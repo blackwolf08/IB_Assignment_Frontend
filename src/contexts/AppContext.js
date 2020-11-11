@@ -51,6 +51,22 @@ export const AppContextProvider = ({ children }) => {
     return data;
   };
 
+  const isUserModificationAvailable = async ({
+    start_time,
+    end_time,
+    email,
+    user_role,
+    id,
+  }) => {
+    const URL =
+      BASE_URI +
+      ROUTES.isUserModificationAvailable +
+      `?start_time=${start_time}&end_time=${end_time}&email=${email}&user_role=${user_role}&id=${id}`;
+
+    let { data } = await axios.get(URL);
+    return data;
+  };
+
   const scheduleNewInterview = async ({
     start_time,
     end_time,
@@ -80,6 +96,35 @@ export const AppContextProvider = ({ children }) => {
     //   duration,
     // });
   };
+  const modifyNewInterview = async ({
+    start_time,
+    end_time,
+    interviewee,
+    interviewer,
+    duration,
+  }) => {
+    let data = new FormData();
+    data.append('start_time', start_time);
+    data.append('end_time', end_time);
+    data.append('interviewer', interviewer);
+    data.append('interviewee', interviewee);
+    data.append('duration', duration);
+
+    await axios({
+      method: 'post',
+      url: `${BASE_URI}${ROUTES.modify}`,
+      data,
+      config: { headers: { 'Content-Type': 'multipart/form-data' } },
+    });
+    await fetchInterviews();
+    // await axios.post(BASE_URI + ROUTES, {
+    //   start_time,
+    //   end_time,
+    //   interviewee,
+    //   interviewer,
+    //   duration,
+    // });
+  };
 
   return (
     <AppContext.Provider
@@ -93,6 +138,8 @@ export const AppContextProvider = ({ children }) => {
         setNewInterviewDetails,
         scheduleNewInterview,
         isUserAvailable,
+        isUserModificationAvailable,
+        modifyNewInterview,
       }}
     >
       {children}

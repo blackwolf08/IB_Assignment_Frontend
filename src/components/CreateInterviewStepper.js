@@ -125,7 +125,7 @@ export function CreateInterviewStepper({ setIsAddNewInterviewModalOpen }) {
   };
 
   const validateUsers = async () => {
-    let start_time = parseInt(moment(date).format('x'));
+    let start_time = parseInt(moment(selectedDate).format('x'));
     let end_time = start_time + parseInt(duration) * 60000; // convert minutes to ms for timestamp,
     let intervieweeStatus = await isUserAvailable({
       start_time,
@@ -142,12 +142,12 @@ export function CreateInterviewStepper({ setIsAddNewInterviewModalOpen }) {
 
     if (interviewerStatus.status == 'ok' && intervieweeStatus.status == 'ok') {
       let newInterviewDetails = {
-        date: date.toString(),
+        date: selectedDate.toString(),
         start_time,
         end_time,
-        interviewer: intervieweeEmail,
+        interviewer: interviewerEmail,
         duration,
-        interviewee: interviewerEmail,
+        interviewee: intervieweeEmail,
       };
       await scheduleNewInterview(newInterviewDetails);
       setActiveStep(0);
