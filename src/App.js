@@ -1,8 +1,8 @@
 import React from 'react';
-import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
-import { HomeScreen } from './screens';
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import { Header } from './components';
 import { AppContextProvider } from './contexts/AppContext';
+import { HomeScreen } from './screens';
 function App() {
   return (
     <div className='h-screen'>

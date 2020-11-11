@@ -1,7 +1,7 @@
-import React, { createContext, useContext, useState, useEffect } from 'react';
 import axios from 'axios';
-import { BASE_URI, ROUTES } from '../utils';
 import moment from 'moment';
+import React, { createContext, useContext, useEffect, useState } from 'react';
+import { BASE_URI, ROUTES } from '../utils';
 const AppContext = createContext();
 
 export const AppContextProvider = ({ children }) => {
@@ -88,13 +88,6 @@ export const AppContextProvider = ({ children }) => {
       config: { headers: { 'Content-Type': 'multipart/form-data' } },
     });
     await fetchInterviews();
-    // await axios.post(BASE_URI + ROUTES, {
-    //   start_time,
-    //   end_time,
-    //   interviewee,
-    //   interviewer,
-    //   duration,
-    // });
   };
   const modifyNewInterview = async ({
     start_time,
@@ -119,13 +112,6 @@ export const AppContextProvider = ({ children }) => {
       config: { headers: { 'Content-Type': 'multipart/form-data' } },
     });
     await fetchInterviews();
-    // await axios.post(BASE_URI + ROUTES, {
-    //   start_time,
-    //   end_time,
-    //   interviewee,
-    //   interviewer,
-    //   duration,
-    // });
   };
 
   return (

@@ -1,19 +1,19 @@
-import React, { useEffect, useState } from 'react';
 import {
+  Button,
   Card,
   CardContent,
-  Button,
-  Modal,
   CircularProgress,
+  Modal,
 } from '@material-ui/core';
-import { Add, Delete, Edit } from '@material-ui/icons';
 import { makeStyles } from '@material-ui/core/styles';
+import { Add, Delete, Edit } from '@material-ui/icons';
+import axios from 'axios';
+import moment from 'moment';
+import React, { useEffect, useState } from 'react';
+import { useAppContext } from '../contexts/AppContext';
+import { BASE_URI, ROUTES } from '../utils';
 import { CreateInterviewStepper } from './CreateInterviewStepper';
 import ModifyInterviewModal from './ModifyInterviewModal';
-import { useAppContext } from '../contexts/AppContext';
-import axios from 'axios';
-import { BASE_URI, ROUTES } from '../utils';
-import moment from 'moment';
 
 const useStyles = makeStyles({
   root: {
@@ -124,12 +124,15 @@ export default function MeetingsList() {
             return (
               <Card className={classes.root} key={id}>
                 <CardContent className={classes.content}>
-                  <div className='flex flex-col content-around'>
+                  <div className='flex flex-col content-around interview-card'>
                     <h6 className='font-bold'>{`Interviewer ${interviewer}`}</h6>
                     <h6 className='font-bold'>{`Interviewee ${interviewee}`}</h6>
                     <h6 className='font-bold'>{`${_date}`}</h6>
                     <h6 className='font-bold'>{`${fromNow}`}</h6>
                   </div>
+                  <h6 className='duration-text-container bg-gray-200'>
+                    Duration (min)
+                  </h6>
                   <div className='duration-container bg-gray-200'>
                     {duration}
                   </div>

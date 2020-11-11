@@ -1,6 +1,6 @@
-import React from 'react';
-import { AppBar, Toolbar, Typography, IconButton } from '@material-ui/core';
+import { AppBar, IconButton, Toolbar, Typography } from '@material-ui/core';
 import { Menu } from '@material-ui/icons';
+import React from 'react';
 export function Header() {
   return (
     <AppBar position='static' color='default'>

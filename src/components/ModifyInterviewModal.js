@@ -1,17 +1,11 @@
-import React, { useState, useEffect } from 'react';
-import { makeStyles } from '@material-ui/core/styles';
-import Stepper from '@material-ui/core/Stepper';
-import Step from '@material-ui/core/Step';
-import StepLabel from '@material-ui/core/StepLabel';
-import Button from '@material-ui/core/Button';
-import { Input, CircularProgress, Modal } from '@material-ui/core';
-import Typography from '@material-ui/core/Typography';
 import DateFnsUtils from '@date-io/date-fns';
+import { Input } from '@material-ui/core';
 import {
-  MuiPickersUtilsProvider,
   KeyboardTimePicker,
+  MuiPickersUtilsProvider,
 } from '@material-ui/pickers';
 import moment from 'moment';
+import React, { useState } from 'react';
 import { useAppContext } from '../contexts/AppContext';
 
 export default function ModifyInterviewModal({
@@ -61,7 +55,10 @@ export default function ModifyInterviewModal({
       id,
     });
 
-    if (interviewerStatus.status == 'ok' && intervieweeStatus.status == 'ok') {
+    if (
+      interviewerStatus.status === 'ok' &&
+      intervieweeStatus.status === 'ok'
+    ) {
       let newInterviewDetails = {
         date: date.toString(),
         start_time,
@@ -75,8 +72,8 @@ export default function ModifyInterviewModal({
       fetchInterviews();
       setIsModifyModalOpen(false);
     } else {
-      if (interviewerStatus.status == 'err') setInterviewerErr(true);
-      if (intervieweeStatus.status == 'err') setIntervieweeErr(true);
+      if (interviewerStatus.status === 'err') setInterviewerErr(true);
+      if (intervieweeStatus.status === 'err') setIntervieweeErr(true);
     }
   };
 

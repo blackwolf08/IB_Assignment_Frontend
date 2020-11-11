@@ -1,12 +1,12 @@
-import React from 'react';
-import {
-  MuiPickersUtilsProvider,
-  KeyboardDatePicker,
-} from '@material-ui/pickers';
-import { MeetingsList } from '../components';
 import DateFnsUtils from '@date-io/date-fns';
-import { useAppContext } from '../contexts';
 import { Typography } from '@material-ui/core';
+import {
+  KeyboardDatePicker,
+  MuiPickersUtilsProvider,
+} from '@material-ui/pickers';
+import React from 'react';
+import { MeetingsList } from '../components';
+import { useAppContext } from '../contexts';
 export default function HomeScreen() {
   const { date, setDate } = useAppContext();
 
