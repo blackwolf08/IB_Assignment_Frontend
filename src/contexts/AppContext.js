@@ -102,6 +102,7 @@ export const AppContextProvider = ({ children }) => {
     interviewee,
     interviewer,
     duration,
+    id,
   }) => {
     let data = new FormData();
     data.append('start_time', start_time);
@@ -109,6 +110,7 @@ export const AppContextProvider = ({ children }) => {
     data.append('interviewer', interviewer);
     data.append('interviewee', interviewee);
     data.append('duration', duration);
+    data.append('id', id);
 
     await axios({
       method: 'post',
