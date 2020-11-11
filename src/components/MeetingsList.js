@@ -54,7 +54,9 @@ export default function MeetingsList() {
         onClose={handleModalClose}
       >
         <span>
-          <CreateInterviewStepper />
+          <CreateInterviewStepper
+            setIsAddNewInterviewModalOpen={setIsAddNewInterviewModalOpen}
+          />
         </span>
       </Modal>
       <div className='bg-gray-300 p-4'>
