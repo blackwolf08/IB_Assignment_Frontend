@@ -13,6 +13,7 @@ import ModifyInterviewModal from './ModifyInterviewModal';
 import { useAppContext } from '../contexts/AppContext';
 import axios from 'axios';
 import { BASE_URI, ROUTES } from '../utils';
+import moment from 'moment';
 
 const useStyles = makeStyles({
   root: {
@@ -117,6 +118,9 @@ export default function MeetingsList() {
             let _date = new Date(parseInt(start_time))
               .toString()
               .split('GMT')[0];
+            let fromNow = moment(
+              new Date(parseInt(start_time)).toString()
+            ).fromNow();
             return (
               <Card className={classes.root} key={id}>
                 <CardContent className={classes.content}>
@@ -124,6 +128,7 @@ export default function MeetingsList() {
                     <h6 className='font-bold'>{`Interviewer ${interviewer}`}</h6>
                     <h6 className='font-bold'>{`Interviewee ${interviewee}`}</h6>
                     <h6 className='font-bold'>{`${_date}`}</h6>
+                    <h6 className='font-bold'>{`${fromNow}`}</h6>
                   </div>
                   <div className='duration-container bg-gray-200'>
                     {duration}
