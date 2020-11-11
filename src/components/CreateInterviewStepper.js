@@ -46,7 +46,8 @@ export function CreateInterviewStepper({ setIsAddNewInterviewModalOpen }) {
   const [interviewerErr, setInterviewerErr] = useState(false);
   const [intervieweeErr, setIntervieweeErr] = useState(false);
   const [intervieweeEmail, setIntervieweeEmail] = useState('');
-  const [interviewerEmail, setInterviewerEmail] = useState('');
+  const [p_interviewerEmail, setP_interviewerEmail] = useState('');
+  const [s_interviewersEmail, setS_interviewersEmail] = useState('');
   const [error, setError] = useState(false);
   const steps = getSteps();
   const [selectedDate, setSelectedDate] = useState(date);
@@ -99,11 +100,20 @@ export function CreateInterviewStepper({ setIsAddNewInterviewModalOpen }) {
               />
             </div>
             <div className=' flex flex-row'>
-              <h6 className='font-bold mr-4'>Interviewer Email</h6>
+              <h6 className='font-bold mr-4'>Primary Interviewer Email</h6>
               <Input
-                value={interviewerEmail}
+                value={p_interviewerEmail}
                 placeholder={'sunny@sunnydhama.com'}
-                onChange={(e) => setInterviewerEmail(e.target.value)}
+                onChange={(e) => setP_interviewerEmail(e.target.value)}
+                error={interviewerErr}
+              />
+            </div>
+            <div className=' flex flex-row'>
+              <h6 className='font-bold mr-4'>Shadow Interviewer Email</h6>
+              <Input
+                value={s_interviewersEmail}
+                placeholder={'sunny@sunnydhama.com'}
+                onChange={(e) => setS_interviewersEmail(e.target.value)}
                 error={interviewerErr}
               />
             </div>
@@ -127,36 +137,37 @@ export function CreateInterviewStepper({ setIsAddNewInterviewModalOpen }) {
   const validateUsers = async () => {
     let start_time = parseInt(moment(selectedDate).format('x'));
     let end_time = start_time + parseInt(duration) * 60000; // convert minutes to ms for timestamp,
-    let intervieweeStatus = await isUserAvailable({
-      start_time,
-      end_time,
-      email: intervieweeEmail,
-      user_role: 'interviewee',
-    });
-    let interviewerStatus = await isUserAvailable({
-      start_time,
-      end_time,
-      email: interviewerEmail,
-      user_role: 'interviewer',
-    });
+    // let intervieweeStatus = await isUserAvailable({
+    //   start_time,
+    //   end_time,
+    //   email: intervieweeEmail,
+    //   user_role: 'interviewee',
+    // });
+    // let interviewerStatus = await isUserAvailable({
+    //   start_time,
+    //   end_time,
+    //   email: interviewerEmail,
+    //   user_role: 'interviewer',
+    // });
 
-    if (interviewerStatus.status == 'ok' && intervieweeStatus.status == 'ok') {
-      let newInterviewDetails = {
-        date: selectedDate.toString(),
-        start_time,
-        end_time,
-        interviewer: interviewerEmail,
-        duration,
-        interviewee: intervieweeEmail,
-      };
-      await scheduleNewInterview(newInterviewDetails);
-      setActiveStep(0);
-      setIsAddNewInterviewModalOpen(false);
-    } else {
-      if (interviewerStatus.status == 'err') setInterviewerErr(true);
-      if (intervieweeStatus.status == 'err') setIntervieweeErr(true);
-      setActiveStep((prevActiveStep) => prevActiveStep - 1);
-    }
+    // if (interviewerStatus.status == 'ok' && intervieweeStatus.status == 'ok') {
+    let newInterviewDetails = {
+      date: selectedDate.toString(),
+      start_time,
+      end_time,
+      s_interviewersEmail,
+      p_interviewerEmail,
+      duration,
+      interviewee: intervieweeEmail,
+    };
+    await scheduleNewInterview(newInterviewDetails);
+    setActiveStep(0);
+    setIsAddNewInterviewModalOpen(false);
+    // } else {
+    //   if (interviewerStatus.status == 'err') setInterviewerErr(true);
+    //   if (intervieweeStatus.status == 'err') setIntervieweeErr(true);
+    //   setActiveStep((prevActiveStep) => prevActiveStep - 1);
+    // }
   };
 
   useEffect(() => {

@@ -70,14 +70,16 @@ export const AppContextProvider = ({ children }) => {
   const scheduleNewInterview = async ({
     start_time,
     end_time,
+    s_interviewersEmail,
+    p_interviewerEmail,
     interviewee,
-    interviewer,
     duration,
   }) => {
     let data = new FormData();
     data.append('start_time', start_time);
     data.append('end_time', end_time);
-    data.append('interviewer', interviewer);
+    data.append('s_interviewers', s_interviewersEmail);
+    data.append('p_interviewer', p_interviewerEmail);
     data.append('interviewee', interviewee);
     data.append('duration', duration);
 
