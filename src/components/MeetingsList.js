@@ -6,10 +6,12 @@ import {
   Modal,
   CircularProgress,
 } from '@material-ui/core';
-import { Add } from '@material-ui/icons';
+import { Add, Delete } from '@material-ui/icons';
 import { makeStyles } from '@material-ui/core/styles';
 import { CreateInterviewStepper } from './CreateInterviewStepper';
 import { useAppContext } from '../contexts/AppContext';
+import axios from 'axios';
+import { BASE_URI, ROUTES } from '../utils';
 
 const useStyles = makeStyles({
   root: {
@@ -46,6 +48,16 @@ export default function MeetingsList() {
   const handleModalClose = () => {
     setIsAddNewInterviewModalOpen(false);
   };
+
+  const deleteInterview = async (id) => {
+    try {
+      await axios.post(`${BASE_URI}${ROUTES.delete}?id=${id}`);
+    } catch (e) {
+      console.log(e);
+    }
+    fetchInterviews();
+  };
+
   return (
     <>
       <Modal
@@ -87,6 +99,12 @@ export default function MeetingsList() {
                   <h6>{`Interviewee ${interviewee}`}</h6>
                 </div>
                 <div className='duration-container bg-gray-200'>{duration}</div>
+                <button
+                  onClick={() => deleteInterview(id)}
+                  className='delete-container bg-red-200'
+                >
+                  <Delete />
+                </button>
               </CardContent>
             </Card>
           )

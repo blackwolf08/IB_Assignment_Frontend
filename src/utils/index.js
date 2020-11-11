@@ -4,4 +4,5 @@ export const ROUTES = {
   getInterviews: 'getInterviews',
   addInterview: 'addInterview',
   isUserAvailable: 'is-user-available',
+  delete: 'delete',
 };
